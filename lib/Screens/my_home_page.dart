@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/counter.dart';
+import 'package:new_app/Provider/counter.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/dummy_data.dart';
+import 'package:new_app/Data/dummy_data.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
