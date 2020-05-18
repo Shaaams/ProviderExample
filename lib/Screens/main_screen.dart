@@ -14,8 +14,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    FontSizeNotify fontSizeNotify = Provider.of<FontSizeNotify>(context);
-    RateNotifiy rateNotify = Provider.of<RateNotifiy>(context);
+    FontSizeNotify fontSizeNotify = Provider.of<FontSizeNotify>(context, listen: false);
+    RateNotifiy rateNotify = Provider.of<RateNotifiy>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black38,
@@ -49,17 +49,26 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 277,
             ),
-            Text(
+            Consumer<FontSizeNotify>(
+              builder: (context, fontSizeConsum, widget){
+                return      Text(
               'Rate US',
               style: TextStyle(
-                fontSize: fontSizeNotify.fontSize,
+                fontSize: fontSizeConsum.fontSize,
                 color: Colors.white,
               ),
+            );
+              }
             ),
             SizedBox(
               height: 33,
             ),
-            getFaces(rateNotify.rate.toInt()),
+            Consumer<RateNotifiy>(
+              builder:(context, rateConsum, widget){
+                return getFaces(rateConsum.rate.toInt());
+              } 
+            
+            ),
             Expanded(
               child: Container(),
             ),
@@ -69,25 +78,33 @@ class _MainScreenState extends State<MainScreen> {
                 color: Colors.white,
               ),
             ),
-            Slider(
-              value: fontSizeNotify.fontSize,
+          Consumer<FontSizeNotify>(
+            builder: (context, fontSlideConsum, widget){
+              return   Slider(
+              value: fontSlideConsum.fontSize,
               onChanged: (newValue) {
-                fontSizeNotify.changeFontSize(newValue);
+                fontSlideConsum.changeFontSize(newValue);
               },
               max: 50,
               min: 20,
-            ),
+            );
+            }
+          ),
             Text(
               'rate them',
               style: TextStyle(color: Colors.white),
             ),
-            Slider(
-              value: rateNotify.rate,
+            Consumer<RateNotifiy>(
+              builder: (context, rateSlideConsum, widget){
+                return Slider(
+              value: rateSlideConsum.rate,
               onChanged: (newValeu) {
-                rateNotify.changeRate(newValeu);
+                rateSlideConsum.changeRate(newValeu);
               },
               max: 4,
               min: 0,
+            );
+              }
             ),
             SizedBox(
               height: 44,
