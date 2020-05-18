@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:new_app/Data/dummy_data.dart';
 import 'package:provider/provider.dart';
 import 'package:new_app/Provider/font_size.dart';
-import 'package:new_app/Provider/rate.dart';
 
-class MainScreen extends StatefulWidget {
-  MainScreen({Key key}) : super(key: key);
+class SecondScreen extends StatefulWidget {
+  SecondScreen({Key key}) : super(key: key);
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _SecondScreenState createState() => _SecondScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
-    //FontSizeNotify fontSizeNotify = Provider.of<FontSizeNotify>(context, listen: false);
-    //RateNotifiy rateNotify = Provider.of<RateNotifiy>(context, listen: false);
+   // FontSizeNotify fontSizeNotify = Provider.of<FontSizeNotify>(context, listen: false);
+   // RateNotifiy rateNotify = Provider.of<RateNotifiy>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black38,
@@ -49,12 +48,14 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 277,
             ),
-            Consumer<FontSizeNotify>(
-              builder: (context, fontSizeConsum, widget){
-                return      Text(
+            Selector<FontSizeNotify, double>(
+              selector: (context, fontFirstSize) => fontFirstSize.getFontFirst,
+              builder: (context, fontSizeFirstSelector, widget){
+                print('from font size 1');
+                return Text(
               'Rate US',
               style: TextStyle(
-                fontSize: fontSizeConsum.fontSize,
+                fontSize: fontSizeFirstSelector,
                 color: Colors.white,
               ),
             );
@@ -63,9 +64,19 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 33,
             ),
-            Consumer<RateNotifiy>(
-              builder:(context, rateConsum, widget){
-                return getFaces(rateConsum.rate.toInt());
+            Selector<FontSizeNotify, double>(
+              selector: (context, fontSecondSize) => fontSecondSize.getFontNext,
+              builder:(context, fontSizeSecondSelector, widget){
+                print('from font size 2');
+                return  Text(
+              'Next Font Size',
+              style: TextStyle(
+                fontSize: fontSizeSecondSelector,
+                color: Colors.white,
+              ),
+            );
+                
+                //getFaces(rateConsum.rate.toInt());
               } 
             
             ),
@@ -94,18 +105,30 @@ class _MainScreenState extends State<MainScreen> {
               'rate them',
               style: TextStyle(color: Colors.white),
             ),
-            Consumer<RateNotifiy>(
-              builder: (context, rateSlideConsum, widget){
-                return Slider(
-              value: rateSlideConsum.rate,
-              onChanged: (newValeu) {
-                rateSlideConsum.changeRate(newValeu);
+            Consumer<FontSizeNotify>(
+            builder: (context, fontSlideConsum, widget){
+              return   Slider(
+              value: fontSlideConsum.fontNextSize,
+              onChanged: (newValue) {
+                fontSlideConsum.changeFontNextSize(newValue);
               },
-              max: 4,
-              min: 0,
+              max: 50,
+              min: 20,
             );
-              }
-            ),
+            }
+          ),
+            // Consumer<RateNotifiy>(
+            //   builder: (context, rateSlideConsum, widget){
+            //     return Slider(
+            //   value: rateSlideConsum.rate,
+            //   onChanged: (newValeu) {
+            //     rateSlideConsum.changeRate(newValeu);
+            //   },
+            //   max: 4,
+            //   min: 0,
+            // );
+            //   }
+            // ),
             SizedBox(
               height: 44,
             ),

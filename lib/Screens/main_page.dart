@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:new_app/Screens/main_screen.dart';
+import 'package:new_app/Screens/second_screen.dart';
 import 'package:new_app/Provider/font_size.dart';
 import 'package:new_app/Provider/rate.dart';
 class MainPage extends StatefulWidget {
@@ -22,7 +22,7 @@ class _MainPageState extends State<MainPage> {
           create: (_) => RateNotifiy(),
         ),
       ],
-      child: MainScreen(),
+      child: SecondScreen(),
     );
   }
 }
